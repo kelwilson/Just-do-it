@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/08f89b8954.js" crossorigin="anonymous"></script>
+    <title>Just-Do-It</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Tasks</h1>
+    <ul>
+    <% tasks?.forEach( el => { %>
+        <li class='taskItem' data-id='<%=el._id%>'>
+            <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.task %></span>
+            <span class="date"><%= el.created_at %></span>
+            <input type="checkbox" id="done" name="done" />
+            <i class="fa-regular fa-pen-to-square" style="color: #124191;"></i>
+            <i class="fa-solid fa-trash-can" style="color: #f41901;"></i>
+            <!-- <span class='del'> Delete </span> -->
+        </li>
+    <% }) %>    
+    </ul>
+
+    <h2>Uncompleted Tasks: <%= left %></h2>
+
+    <form action="/tasks/createTask" method='POST'>
+        <input type="text" placeholder="Enter Task Item" name='taskItem'>
+        <input type="submit">
+    </form>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
