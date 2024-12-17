@@ -41,4 +41,14 @@ module.exports = {
             console.log(err)
         }
     },
+    deleteTask: async (req, res)=>{
+        console.log(req.body.taskIdFromJSFile)
+        try{
+            await Task.findOneAndDelete({_id:req.body.taskIdFromJSFile})
+            console.log('Deleted Todo')
+            res.json('Deleted It')
+        }catch(err){
+            console.log(err)
+        }
+    }
 }
