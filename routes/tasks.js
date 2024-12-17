@@ -6,6 +6,7 @@ router.get('/', taskController.getTasks)
 router.post('/createTask', taskController.createTask)
 router.put('/markComplete', taskController.markComplete)
 router.put('/markIncomplete', taskController.markIncomplete)
+router.delete('/deleteTask', taskController.deleteTask)
 
 
 
