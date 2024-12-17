@@ -19,4 +19,26 @@ module.exports = {
             console.log(err)
         }
     },
+    markComplete: async (req, res)=>{
+        try{
+            await Task.findOneAndUpdate({_id:req.body.taskIdFromJSFile},{
+                completed: true
+            })
+            console.log('Marked Complete')
+            res.json('Marked Complete')
+        }catch(err){
+            console.log(err)
+        }
+    },
+    markIncomplete: async (req, res)=>{
+        try{
+            await Task.findOneAndUpdate({_id:req.body.taskIdFromJSFile},{
+                completed: false
+            })
+            console.log('Marked Incomplete')
+            res.json('Marked Incomplete')
+        }catch(err){
+            console.log(err)
+        }
+    },
 }
