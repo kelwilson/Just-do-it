@@ -4,6 +4,8 @@ const taskController = require('../controllers/tasks')
 
 router.get('/', taskController.getTasks)
 router.post('/createTask', taskController.createTask)
+router.put('/markComplete', taskController.markComplete)
+router.put('/markIncomplete', taskController.markIncomplete)
 
 
 
