@@ -5,7 +5,7 @@ module.exports = {
         try{
             const taskItems = await Task?.find()
             const itemsLeft = await Task.countDocuments({completed: false})
-            res.render('tasks.ejs', {tasks: taskItems, left: itemsLeft})
+            res.render('tasks.ejs', {tasks: taskItems, left: itemsLeft}, )
         }catch(err){
             console.log(err)
         }
@@ -50,5 +50,33 @@ module.exports = {
         }catch(err){
             console.log(err)
         }
+    }, 
+    // Fetch a single task
+    getTaskId: async (req, res) => {
+        console.log(req.params.id)
+    try {
+      const task = await Task.findById(req.params.id);
+    //   console.log(task)
+      res.json(task);
+    } catch (err) {
+      res.status(500).json({ error: "Task not found" });
     }
+  },
+  // Update a task
+    updateTask: async (req, res) => {
+        console.log(req.params.id, req.body)
+    try {
+        
+      const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      console.log(updatedTask)
+      res.json(updatedTask);
+    } catch (err) {
+      res.status(500).json({ error: "Error updating task" });
+      console.error(err);
+    
+    }
+    },
+    
+
 }
+  
