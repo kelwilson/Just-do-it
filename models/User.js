@@ -24,13 +24,24 @@ const UserSchema = new mongoose.Schema({
 })
 
 
+// Old code
 // Helper method for validating user's password.
 
-UserSchema.methods.comparePassword = function comparePassword(candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
-    cb(err, isMatch)
-  })
-}
+// UserSchema.methods.comparePassword = function comparePassword(candidatePassword, cb) {
+//   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+//     cb(err, isMatch)
+//   })
+// }
+
+// New async await code 
+UserSchema.methods.comparePassword = async function (candidatePassword) {
+  try {
+    const isMatch = await bcrypt.compare(candidatePassword, this.password);
+    return isMatch;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 
 
 module.exports = mongoose.model('User', UserSchema)
