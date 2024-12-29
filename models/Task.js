@@ -9,6 +9,10 @@ const TaskSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
+    userId: {
+        type: String,
+        required: true
+      }
     // createdAt: {
     //     type: Date,
     //     default: Date.now,
@@ -16,6 +20,7 @@ const TaskSchema = new mongoose.Schema({
     },
     { timestamps: 
     { createdAt: 'created_at' } 
-    }
+    },
+    
 )
 module.exports = mongoose.model('Task', TaskSchema)
