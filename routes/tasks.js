@@ -9,7 +9,7 @@ router.post('/createTask', taskController.createTask)
 router.put('/markComplete', taskController.markComplete)
 router.put('/markIncomplete', taskController.markIncomplete)
 router.delete('/deleteTask', taskController.deleteTask)
-router.put('/:id/update', taskController.updateTask)
+router.put('/updateTask/:id', taskController.updateTask)
 
 
 
