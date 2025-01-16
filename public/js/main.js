@@ -5,6 +5,13 @@ const editButton = document.querySelectorAll('.fa-pen-to-square')
 const trashButton = document.querySelectorAll('.fa-trash-can')
 const taskContainer = document.querySelectorAll('.taskItem')
 const checkButtons = document.querySelectorAll('input[type="checkbox"]')
+const overlay = document.querySelector('.overlay')
+const closeButton = document.querySelector('.fa-rectangle-xmark')
+const editDiv = document.querySelector('.edit-div')
+const editTaskForm = document.getElementById("editTaskForm");
+const taskInput = document.getElementById("taskInput");
+const taskIdField = document.getElementById("taskId");
+const updatebutton = document.getElementById('update-form')
 
 
 
@@ -18,7 +25,9 @@ Array.from(checkButton).forEach(btn => btn.addEventListener('change', toggleChec
 
 Array.from(trashButton).forEach(btn => btn.addEventListener('click', deleteTask))
 
-// Array.from(checkButton).forEach(btn => btn.addEventListener('click', markInComplete))
+Array.from(editButton).forEach(btn => btn.addEventListener('click', editTask))
+
+updatebutton.addEventListener('click', updateForm )
 
 //checking to see if task are marked complete and changing the attribute of the checkbox accordingly
 // Trying to check and uncheck the check box by clicking the task but its not working !!!
@@ -52,11 +61,19 @@ if(btn.checked) {
 }
 
 
+closeButton.addEventListener('click', close)
+overlay.addEventListener('click', close)
+
+function close() {
+    overlay.classList.add('hidden')
+    editDiv.classList.add('hidden')
+}
+
 
 // mark complete button
 async function markComplete() {
     // const taskId = this.parentNode?.dataset.id
-     const taskId = event.currentTarget.closest('.taskItem')?.dataset.id;
+    const taskId = event.currentTarget.closest('.taskItem')?.dataset.id;
     console.log('yeah we outside', taskId)
     try{
         const response = await fetch('tasks/markComplete', {
@@ -75,7 +92,7 @@ async function markComplete() {
 
 }
 
-async function markIncomplete(){
+async function markIncomplete(event){
     // const taskId = this.parentNode?.dataset.id
     const taskId = event.currentTarget.closest('.taskItem')?.dataset.id;
     console.log('yeah we back', taskId)
@@ -115,7 +132,101 @@ async function deleteTask(){
     }
 }
 
+function getId () {
+    // const id = event.target.parentNode.dataset.id;
+    return  event.target?.parentNode?.dataset.id;
+}
+
+// declaring the variable to hold the task Id
+let taskId = null;
 
 
+async function editTask(){
+    console.log('we coming')
+   
+
+    // const taskId = this.parentNode.dataset.id
+    // taskIdField.value = taskId;
+    // console.log(taskIdField.value)
+    try {
+
+        // const taskId = event.target.parentNode.dataset.id; // Fetch task ID from the clicked element
+         taskId = getId()
+        console.log("Task ID:", taskId);
+
+        // Fetch task details using async/await
+        const response = await fetch(`/tasks/${taskId}`);
+        const data = await response.json();
+        console.log(data)
+
+        if (data.task) {
+          taskInput.value = data.task; // Populate the form with task details
+        //   editTaskForm.style.display = "block"; // Show the form
+        overlay.classList.remove('hidden')
+        editDiv.classList.remove('hidden')
+        } else {
+          console.error("Task not found");
+        }
+      } catch (err) {
+        console.error("Error fetching task:", err);
+      }
+    }
+
+    
+     // Handle form submission to update the task
+    //  editTaskForm.addEventListener("submit", async (event) => {
+    //  event.preventDefault();
+
+    
+    async function updateForm() {
+        // event.preventDefault();
+
+        taskInput.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent form from reloading the page
+        // const updatedTask = {
+        // taskName: taskInput.value,
+        
+
+        const updatedText= taskInput.value
+
+        console.log(updatedTask)
+        // const taskId = '67657ab52e8731c659ab082c'
+        // const taskId = getId()
+        
+        try {
+            // const taskId = event.target.parentNode.dataset.id; 
+          /* editTaskForm.action = `task/${taskId}/update`; */
+            // console.log(taskId)
+         // Update task using async/await
+        //  const response = await fetch(`/tasks/${taskId}/update`, {
+         const response = await fetch(`/tasks/${taskId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedText),
+        });
+
+        if (response.ok) {
+            const updatedTask = await response.json();
+            // Update the DOM with the new task text
+            document.querySelector(`#todo-${editingTaskId} .task-text`).textContent = updatedTask.text;
+            hideEditForm(); // Hide the form
+            console.log("Task updated successfully:", data);
+        } else {
+            alert('Failed to update the task');
+        }
+
+        // const data = await response.json();
+        // console.log("Task updated successfully:", data);
+
+        //   editTaskForm.style.display = "none"; // Hide the form after update
+        overlay.classList.add('hidden')
+        editDiv.classList.add('hidden')
+        } catch (err) {
+          console.error("Error updating task:", err);
+        }
+    })
+    }
+    
+console.log(taskIdField.value)
 
 

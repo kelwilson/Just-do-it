@@ -68,19 +68,16 @@ module.exports = {
   },
   // Update a task
     updateTask: async (req, res) => {
-        console.log(req.params.id, req.body)
     try {
-        
-      const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      console.log(updatedTask)
-      res.json(updatedTask);
-    } catch (err) {
-      res.status(500).json({ error: "Error updating task" });
-      console.error(err);
-    
+        const updatedTask = await Task.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body }, // Use body for updating the document
+            { new: true } // Return the updated document
+        );
+        res.json(updatedTask);
+        console.log('Updated Successfully !!!')
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update the task' });
     }
-    },
-    
-
 }
-  
+}

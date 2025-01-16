@@ -28,6 +28,7 @@ app.use(logger('dev'))
 
 
 // Sessions
+
 app.use(
     session({
         secret: 'keyboard Cat',
@@ -35,8 +36,11 @@ app.use(
         saveUninitialized: false,
         // store: new MongoStore({ mongooseConnection: mongoose.connection}),
         // store: new MongoStore({ mongooseConnection: mongoose.connection }),
-        store: MongoStore.create({mongoUrl: process.env.DB_STRING,}),
-        cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }  // Cookie config
+        store: MongoStore.create({
+            mongoUrl: process.env.DB_STRING, 
+        }),
+        // cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }  // Cookie config
+        cookie: { secure: false }, 
     })
 )
 
