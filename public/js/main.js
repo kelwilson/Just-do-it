@@ -177,19 +177,16 @@ async function editTask(){
     //  editTaskForm.addEventListener("submit", async (event) => {
     //  event.preventDefault();
 
-    
     async function updateForm() {
         // event.preventDefault();
 
-        taskInput.addEventListener('submit', async (e) => {
+       editTaskForm.addEventListener('submit', async (e) => {
             e.preventDefault(); // Prevent form from reloading the page
         // const updatedTask = {
         // taskName: taskInput.value,
         
 
         const updatedText= taskInput.value
-
-        console.log(updatedTask)
         // const taskId = '67657ab52e8731c659ab082c'
         // const taskId = getId()
         
@@ -208,8 +205,7 @@ async function editTask(){
         if (response.ok) {
             const updatedTask = await response.json();
             // Update the DOM with the new task text
-            document.querySelector(`#todo-${editingTaskId} .task-text`).textContent = updatedTask.text;
-            hideEditForm(); // Hide the form
+            taskInput.textContent = updatedTask.text;
             console.log("Task updated successfully:", data);
         } else {
             alert('Failed to update the task');

@@ -68,6 +68,8 @@ module.exports = {
   },
   // Update a task
     updateTask: async (req, res) => {
+        console.log(req.params.id)
+        console.log(req.body)
     try {
         const updatedTask = await Task.findByIdAndUpdate(
             req.params.id,
