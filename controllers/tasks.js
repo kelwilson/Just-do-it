@@ -71,10 +71,14 @@ module.exports = {
         console.log(req.params.id)
         console.log(req.body)
     try {
-        const updatedTask = await Task.findByIdAndUpdate(
-            req.params.id,
-            { $set: req.body }, // Use body for updating the document
-            { new: true } // Return the updated document
+        const updatedTask = await Task.findOneAndUpdate({ _id: req.params.id }, req.body, {
+            new: true,
+            runValidators: true,
+          })
+        // const updatedTask = await Task.findByIdAndUpdate(
+        //     req.params.id,
+        //     { $set: req.body }, // Use body for updating the document
+       z    { new: true } // Return the updated document
         );
         res.json(updatedTask);
         console.log('Updated Successfully !!!')
