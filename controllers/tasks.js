@@ -55,17 +55,19 @@ module.exports = {
             console.log(err)
         }
     }, 
+    
     // Fetch a single task
     getTaskId: async (req, res) => {
         console.log(req.params.id)
     try {
       const task = await Task.findById(req.params.id);
-    //   console.log(task)
+   
       res.json(task);
     } catch (err) {
       res.status(500).json({ error: "Task not found" });
     }
   },
+
   // Update a task
     updateTask: async (req, res) => {
         console.log(req.params.id)
@@ -75,13 +77,10 @@ module.exports = {
             new: true,
             runValidators: true,
           })
-        // const updatedTask = await Task.findByIdAndUpdate(
-        //     req.params.id,
-        //     { $set: req.body }, // Use body for updating the document
-       //    { new: true } // Return the updated document
-        //);
+
         res.json(updatedTask);
         console.log('Updated Successfully !!!')
+     
     } catch (error) {
         res.status(500).json({ error: 'Failed to update the task' });
     }
