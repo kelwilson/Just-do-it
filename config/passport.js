@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const User = require('../models/User')
 
 // Having errors with the old code, so used chat gpt for a new fix
-
+// New updated code
 module.exports = (passport) => {
   passport.use(
     new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
