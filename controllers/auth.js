@@ -48,6 +48,7 @@ const User = require('../models/User')
   //   })
   // }
 
+  // new updated code 
     exports.logout = (req, res) => {
     req.logout(() => {
       console.log('User has logged out.')
@@ -109,7 +110,7 @@ const User = require('../models/User')
   // }
 
 
-  // New code
+  // New updated code
   exports.postSignup = async (req, res, next) => {
     const validationErrors = [];
   
